@@ -15,7 +15,7 @@ Optional inputs:    - topk: type int, returns the top K most likely dog breeds (
 # import packages
 import argparse
 from detector_functions import face_detector, dog_detector
-from data_functions import path_to_tensor
+from data_functions import path_to_tensor, extract_Resnet50
 from keras.models import load_model
 from keras.applications.resnet50 import ResNet50, preprocess_input
 import pickle
@@ -37,20 +37,18 @@ model = load_model(checkpoint)
 # convert image into tensor
 img_tensor = path_to_tensor(img_path)
 
-def Resnet50_predict_breed(img_path):
-    # extract bottleneck features from pre-trained ResNet50 model
-    bottleneck_feature = ResNet50(weights='imagenet', include_top=False).predict(preprocess_input(img_tensor))
-    # obtain vector of prediction probabilities
-    predicted_vector = model.predict(bottleneck_feature)
-    # return dog breed that is predicted by the model
-    return dog_names[np.argmax(predicted_vector)].replace('_',' ')
+# extract bottleneck features from pre-trained ResNet50 model
+bottleneck_feature = extract_Resnet50(img_tensor)
+
+# obtain predicted vector
+predicted_vector = resnet50_model.predict(bottleneck_feature)
+
+# return dog breed that is predicted by the model
+prediction = dog_names[np.argmax(predicted_vector)].replace('_',' ')
 
 # load list of dog names from pickle file
 with open('dog_names.pkl', 'rb') as f:
 	dog_names = pickle.load(f)
-
-# get predicted dog breed name
-prediction = Resnet50_predict_breed(img_path).replace('_',' ')
 
 # get correct article to use in front of breed name
 vowels = ['a','e','i','o','u']
