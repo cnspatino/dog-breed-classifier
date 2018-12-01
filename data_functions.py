@@ -12,5 +12,16 @@ def path_to_tensor(img_path):
     return np.expand_dims(x, axis=0)
 
 def extract_Resnet50(tensor):
-	return ResNet50(weights='imagenet', include_top=False).predict(preprocess_input(tensor))
+	return ResNet50(weights='imagenet', include_top=False, pooling='avg').predict(preprocess_input(tensor))
 
+def Resnet50_predict_breed(img_path, model, name_list):
+    # extract bottleneck features from pre-trained ResNet50 model (output is 2D)
+    bottleneck_feature = extract_Resnet50(path_to_tensor(img_path))
+    # add two more dimensions
+    bottleneck_feature = np.expand_dims(bottleneck_feature, axis=0)
+    bottleneck_feature = np.expand_dims(bottleneck_feature, axis=0)
+
+    # obtain vector of prediction probabilities
+    predicted_vector = model.predict(bottleneck_feature)
+    # return dog breed that is predicted by the model
+    return name_list[np.argmax(predicted_vector)].replace('_',' ')
