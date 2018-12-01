@@ -8,14 +8,14 @@ Required inputs:    - image_path: type str, filepath to single image
                     - checkpoint: type str, checkpoint filepath for trained network
 
 Optional inputs:    - topk: type int, returns the top K most likely dog breeds (default is 1)
-                    - gpu: whether to train on gpu (default is cpu)
+                    
 
 """
 
 # import packages
 import argparse
 from detector_functions import face_detector, dog_detector
-from data_functions import path_to_tensor, extract_Resnet50
+from data_functions import path_to_tensor, extract_Resnet50, Resnet50_predict_breed
 from keras.models import load_model
 from keras.applications.resnet50 import ResNet50, preprocess_input
 import pickle
@@ -34,21 +34,12 @@ checkpoint = args['checkpoint']
 # load model
 model = load_model(checkpoint)
 
-# convert image into tensor
-img_tensor = path_to_tensor(img_path)
-
-# extract bottleneck features from pre-trained ResNet50 model
-bottleneck_feature = extract_Resnet50(img_tensor)
-
-# obtain predicted vector
-predicted_vector = resnet50_model.predict(bottleneck_feature)
-
-# return dog breed that is predicted by the model
-prediction = dog_names[np.argmax(predicted_vector)].replace('_',' ')
-
 # load list of dog names from pickle file
 with open('dog_names.pkl', 'rb') as f:
 	dog_names = pickle.load(f)
+
+# return dog breed that is predicted by the model
+prediction = Resnet50_predict_breed(img_path, model, dog_names)
 
 # get correct article to use in front of breed name
 vowels = ['a','e','i','o','u']
