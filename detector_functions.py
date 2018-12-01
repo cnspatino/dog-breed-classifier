@@ -1,11 +1,12 @@
 import cv2    
 from keras.applications.resnet50 import preprocess_input, decode_predictions
 from data_functions import path_to_tensor
+import numpy as np
 
 
 def face_detector(img_path):
 	### returns "True" if face is detected in image stored at img_path
-    face_cascade = cv2.CascadeClassifier('haarcascades/haarcascade_frontalface_alt.xml')
+    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
     img = cv2.imread(img_path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray)
