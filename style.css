@@ -1,8 +1,14 @@
-#img-upload{
+#img-upload
+{
     width: 100%;
-
 }
 
-input.form-control {
+input.form-control 
+{
     display: none !important;
+}
+
+.nopadding 
+{
+   padding: 0 !important;
 }
