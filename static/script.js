@@ -1,4 +1,26 @@
 $(document).ready( function() {
+
+        $('#uploadFile').on('click', function()
+        {
+            var fd = new FormData();
+            var files = $('#imgInp')[0].files[0];
+            fd.append('file',files);
+
+            $.ajax({
+                url: '/',
+                method: 'POST',
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    //TODO: use returned json from flask route '/' POST
+                    //var myobj = JSON.parse(response.text);    
+                    //$("#PredictedFriendlyMessage").text(myObj.PredictedFriendlyMessage);
+                    alert('hi');
+                },
+            });
+        });
+
         $(document).on('change', '.btn-file :file', function() {
         var input = $(this),
             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
