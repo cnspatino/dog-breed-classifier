@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, request, redirect, url_for, send_from_directory, jsonify
 from werkzeug.utils import secure_filename
 import os
-from prediction_scripts.predict_dog_breed import predict_breed
+from dogclassifierapp.prediction_scripts.predict_dog_breed import predict_breed
 
 
 UPLOAD_FOLDER = 'uploads'

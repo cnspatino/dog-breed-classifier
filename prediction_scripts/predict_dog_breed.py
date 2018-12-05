@@ -1,12 +1,13 @@
 # import packages
-from prediction_scripts.detector_functions import face_detector, dog_detector
-from prediction_scripts.data_functions import path_to_tensor, extract_Resnet50, Resnet50_predict_breed
+from dogclassifierapp.prediction_scripts.detector_functions import face_detector, dog_detector
+from dogclassifierapp.prediction_scripts.data_functions import path_to_tensor, extract_Resnet50, Resnet50_predict_breed
 from keras.models import load_model
 from keras.applications.resnet50 import ResNet50, preprocess_input
 import pickle
 import numpy as np
 
-def predict_breed(img_path, checkpoint='/Users/cadpav/Documents/Udacity/Data_Scientist_Nanodegree/Term2/Projects/Capstone_project/dog_classifier_webapp/prediction_scripts/resnet50_model.h5', names_pkl='/Users/cadpav/Documents/Udacity/Data_Scientist_Nanodegree/Term2/Projects/Capstone_project/dog_classifier_webapp/prediction_scripts/dog_names.pkl'):
+
+def predict_breed(img_path, checkpoint='/Users/cadpav/Documents/Udacity/Data_Scientist_Nanodegree/Term2/Projects/Capstone_project/dog_classifier_webapp/dogclassifierapp/prediction_scripts/resnet50_model.h5', names_pkl='/Users/cadpav/Documents/Udacity/Data_Scientist_Nanodegree/Term2/Projects/Capstone_project/dog_classifier_webapp/dogclassifierapp/prediction_scripts/dog_names.pkl'):
 	"""
 	This function loads a trained network from a checkpoint file and uses the model to 
 	predict the dog breed for an input image. When the input image is of a dog, it 
