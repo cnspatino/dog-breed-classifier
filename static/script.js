@@ -1,5 +1,7 @@
 $(document).ready( function() {
 
+        $('#uploadFile').hide();
+
         $('#uploadFile').on('click', function()
         {
             var fd = new FormData();
@@ -47,6 +49,7 @@ $(document).ready( function() {
                 
                 reader.onload = function (e) {
                     $('#img-upload').attr('src', e.target.result);
+                    $('#uploadFile').show();
                 }
                 
                 reader.readAsDataURL(input.files[0]);
