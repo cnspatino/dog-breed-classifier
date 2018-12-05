@@ -6,6 +6,8 @@ $(document).ready( function() {
             var files = $('#imgInp')[0].files[0];
             fd.append('file',files);
 
+            $('#cover-spin').show();
+
             $.ajax({
                 url: '/prediction',
                 method: 'POST',
@@ -13,10 +15,10 @@ $(document).ready( function() {
                 contentType: false,
                 processData: false,
                 success: function(response){
-                    //TODO: use returned json from flask route '/prediction' POST
-                    //var myobj = JSON.parse(response.text);    
-                    //$("#PredictedFriendlyMessage").text(myObj.PredictedFriendlyMessage);
-                    alert(response.predictionText);
+                    $('#prediction-text').text(response.predictionText);
+                },
+                complete: function(response){
+                    $('#cover-spin').hide();
                 },
             });
         });
