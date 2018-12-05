@@ -7,16 +7,16 @@ $(document).ready( function() {
             fd.append('file',files);
 
             $.ajax({
-                url: '/',
+                url: '/prediction',
                 method: 'POST',
                 data: fd,
                 contentType: false,
                 processData: false,
                 success: function(response){
-                    //TODO: use returned json from flask route '/' POST
+                    //TODO: use returned json from flask route '/prediction' POST
                     //var myobj = JSON.parse(response.text);    
                     //$("#PredictedFriendlyMessage").text(myObj.PredictedFriendlyMessage);
-                    alert('hi');
+                    alert(response.predictionText);
                 },
             });
         });
