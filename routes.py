@@ -40,7 +40,10 @@ def predict():
         pred_message, pred_img = predict_breed(image_path)
 
         prediction_results = Prediction(pred_message, pred_img)
-        # TO DO: erase image
+        
+        #erase image from folder
+        os.remove(image_path)
+
         return jsonify(prediction_results.__dict__)
 
 
