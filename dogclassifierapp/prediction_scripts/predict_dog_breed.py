@@ -8,6 +8,7 @@ import numpy as np
 from os import listdir
 from os.path import isfile, join
 from keras import backend as K
+from dogclassifierapp import app
 
 
 def predict_breed(img_path, checkpoint='static/resnet50_model.h5', names_pkl='static/dog_names.pkl'):
@@ -28,6 +29,15 @@ def predict_breed(img_path, checkpoint='static/resnet50_model.h5', names_pkl='st
 
 	# clear Keras session to reset before loading model
 	K.clear_session()
+
+	# add root paths to file path inputs
+	checkpoint = os.path.join(app.root_path, checkpoint)
+	names_pkl = os.path.join(app.root_path, names_pkl)
+
+	# add root path to prediction image paths
+	breeds = os.path.join(app.root_path, 'static/breeds')
+	dog_return_img = os.path.join(app.root_path, 'static/img/dog.jpg')
+	other_return_img = os.path.join(app.root_path,'static/img/oops.png')
 
 	# load model
 	model = load_model(checkpoint)
@@ -50,20 +60,20 @@ def predict_breed(img_path, checkpoint='static/resnet50_model.h5', names_pkl='st
 	if face_detector(img_path) == True and dog_detector(img_path) == False:
 	
 		# get list of filenames for breed images in breeds folder	
-		breed_files = [f for f in listdir('static/breeds') if isfile(join('static/breeds', f))]
+		breed_files = [f for f in listdir(breeds) if isfile(join(breeds, f))]
 	
 		# get filename that matches breed prediction
 		for filename in breed_files:
 			if prediction.replace(' ', '_') in filename:
-				breed_img = 'static/breeds/' + filename
+				breed_img = os.path.join(breeds, filename)
 		# return prediction message and breed image
 		return "Hi there, human! Your furry doppelganger is {} {}. I'd take that as a compliment! :)".format(article, prediction), breed_img
 	
 	elif dog_detector(img_path) == True:
-		return "This doggo appears to be {} {}. What a good boye!".format(article, prediction), 'static/img/dog.jpg'
+		return "This doggo appears to be {} {}. What a good boye!".format(article, prediction), dog_return_img
 	
 	else:
-		return "Oops, the algorithm won't work with this image! Please make sure the image is either of a dog or a front-facing human face.", 'static/img/oops.png'
+		return "Oops, the algorithm won't work with this image! Please make sure the image is either of a dog or a front-facing human face.", other_return_img
 
 	
 
