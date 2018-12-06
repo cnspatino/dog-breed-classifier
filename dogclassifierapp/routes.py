@@ -34,18 +34,27 @@ class Prediction:
 
 @app.route('/prediction', methods=['POST'])
 def predict():
+    logging.warning('in predict')
     file = request.files['file']
+    logging.warning('got file')
     if file and allowed_file(file.filename):
+        logging.warning('file allowed')
         filename = secure_filename(file.filename)
+        logging.warning('secure filename')
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        logging.warning('path joined')
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        logging.warning('image saved')
 
         pred_message, pred_img = predict_breed(image_path)
+        logging.warning('predicted')
 
         prediction_results = Prediction(pred_message, pred_img)
+        logging.warning('built result')
         
         #erase image from folder
         os.remove(image_path)
+        logging.warning('removed')
 
         return jsonify(prediction_results.__dict__)
 
