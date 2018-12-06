@@ -3,6 +3,7 @@ from keras.applications.resnet50 import preprocess_input, decode_predictions
 from dogclassifierapp.prediction_scripts.data_functions import path_to_tensor
 import numpy as np
 from dogclassifierapp import app
+from os.path import join
 
 
 def face_detector(img_path):
