@@ -1,1 +1,1 @@
-from dogclassifier import app
+from dogclassifierapp import app
