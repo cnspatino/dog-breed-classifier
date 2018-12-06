@@ -1,6 +1,10 @@
 from flask import Flask
+import logging
+
+logging.warning('starting')
 
 app = Flask(__name__)
 
-from dogclassifierapp import routes
+logging.warning('started')
 
+from dogclassifierapp import routes
