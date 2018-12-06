@@ -1,13 +1,14 @@
 $(document).ready( function() {
 
         $('#uploadFile').hide();
+        $('#prediction-div').hide();
 
         $('#uploadFile').on('click', function()
         {
             var fd = new FormData();
             var files = $('#imgInp')[0].files[0];
             fd.append('file',files);
-
+            
             $('#cover-spin').show();
 
             $.ajax({
@@ -17,7 +18,9 @@ $(document).ready( function() {
                 contentType: false,
                 processData: false,
                 success: function(response){
+                    $('#prediction-div').show();
                     $('#prediction-text').text(response.predictionText);
+                    $('#prediction-img').attr('src', response.predictionImage);
                 },
                 complete: function(response){
                     $('#cover-spin').hide();
@@ -32,6 +35,8 @@ $(document).ready( function() {
         });
 
         $('.btn-file :file').on('fileselect', function(event, label) {
+
+            $('#prediction-div').hide();
             
             var input = $(this).parents('.input-group').find(':text'),
                 log = label;
