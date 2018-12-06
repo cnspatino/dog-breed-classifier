@@ -11,12 +11,12 @@ def face_detector(img_path):
 	cascade_path = os.path.join(app.root_path, 'static/haarcascade_frontalface_alt.xml')
 
 	### returns "True" if face is detected in image stored at img_path
-    face_cascade = cv2.CascadeClassifier(cascade_path)
-    img = cv2.imread(img_path)
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray)
-    
-    return len(faces) > 0
+	face_cascade = cv2.CascadeClassifier(cascade_path)
+	img = cv2.imread(img_path)
+	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+	faces = face_cascade.detectMultiScale(gray)
+	
+	return len(faces) > 0
 
 
 def dog_detector(img_path):
@@ -34,4 +34,4 @@ def dog_detector(img_path):
 
 	return ((prediction <= 268) & (prediction >= 151)) 
 
-    
+	
