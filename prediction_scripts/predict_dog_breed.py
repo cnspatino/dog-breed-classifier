@@ -5,9 +5,12 @@ from keras.models import load_model
 from keras.applications.resnet50 import ResNet50, preprocess_input
 import pickle
 import numpy as np
+from os import listdir
+from os.path import isfile, join
+from keras import backend as K
 
 
-def predict_breed(img_path, checkpoint='/Users/cadpav/Documents/Udacity/Data_Scientist_Nanodegree/Term2/Projects/Capstone_project/dog_classifier_webapp/dogclassifierapp/prediction_scripts/resnet50_model.h5', names_pkl='/Users/cadpav/Documents/Udacity/Data_Scientist_Nanodegree/Term2/Projects/Capstone_project/dog_classifier_webapp/dogclassifierapp/prediction_scripts/dog_names.pkl'):
+def predict_breed(img_path, checkpoint='static/resnet50_model.h5', names_pkl='static/dog_names.pkl'):
 	"""
 	This function loads a trained network from a checkpoint file and uses the model to 
 	predict the dog breed for an input image. When the input image is of a dog, it 
@@ -15,13 +18,16 @@ def predict_breed(img_path, checkpoint='/Users/cadpav/Documents/Udacity/Data_Sci
 	human, it returns the most resembling breed in a corresponding message.
 
 	Inputs:    			- img_path: type str, filepath to single image
-	                    - checkpoint: type str, checkpoint filepath for trained network
-	                    - names_pkl: type str, path to pkl file of list of dog names
+						- checkpoint: type str, checkpoint filepath for trained network
+						- names_pkl: type str, path to pkl file of list of dog names
 
-	Output:				- prediction message
-	                    
+	Output:				- prediction message, path to breed image (if human) or empty string (if dog)
+						
 
 	"""
+
+	# clear Keras session to reset before loading model
+	K.clear_session()
 
 	# load model
 	model = load_model(checkpoint)
@@ -38,15 +44,26 @@ def predict_breed(img_path, checkpoint='/Users/cadpav/Documents/Udacity/Data_Sci
 	if prediction.lower()[0] in vowels:
 		article = 'an'
 	else:
-	    article = 'a'
+		article = 'a'
 
 	# return prediction with friendly message      
 	if face_detector(img_path) == True and dog_detector(img_path) == False:
-	    return "Hi there, human! You resemble {} {}. I'd take that as a compliment! :)".format(article, prediction)
+	
+		# get list of filenames for breed images in breeds folder	
+		breed_files = [f for f in listdir('static/breeds') if isfile(join('static/breeds', f))]
+	
+		# get filename that matches breed prediction
+		for filename in breed_files:
+			if prediction.replace(' ', '_') in filename:
+				breed_img = 'static/breeds/' + filename
+		# return prediction message and breed image
+		return "Hi there, human! Your furry doppelganger is {} {}. I'd take that as a compliment! :)".format(article, prediction), breed_img
+	
 	elif dog_detector(img_path) == True:
-	    return "This doggo appears to be {} {}. What a good boye!".format(article, prediction)
+		return "This doggo appears to be {} {}. What a good boye!".format(article, prediction), 'static/img/dog.jpg'
+	
 	else:
-	    return "Oops, the algorithm won't work with this image! Please make sure the image is either of a dog or a front-facing human face."
+		return "Oops, the algorithm won't work with this image! Please make sure the image is either of a dog or a front-facing human face.", 'static/img/oops.png'
 
 	
 
