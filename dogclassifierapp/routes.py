@@ -2,19 +2,22 @@ from flask import Flask, render_template, flash, request, redirect, url_for, sen
 from werkzeug.utils import secure_filename
 import os
 from dogclassifierapp.prediction_scripts.predict_dog_breed import predict_breed
+from dogclassifierapp import app
+import logging
 
+logging.warning('in routes.py')
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
 
-app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 
 @app.route('/', methods=['GET'])
 def index():
+    logging.warning('in index route get')
     return render_template('index.html')
 
 
