@@ -47,3 +47,11 @@ input.form-control
     -webkit-animation: spin .8s linear infinite;
     animation: spin .8s linear infinite;
 }
+
+.loading-text {
+  width: 200px;
+  position: absolute;
+  top: calc(50% - 15px);
+  left: calc(50% - 115px);
+  text-align: center;
+}
