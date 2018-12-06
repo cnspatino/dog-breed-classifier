@@ -7,7 +7,8 @@ import logging
 
 logging.warning('in routes.py')
 
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = os.path.join(app.root_path, 'tmp')
+logging.warning('root folder: ' + UPLOAD_FOLDER)
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg'])
 
 
@@ -52,8 +53,6 @@ def predict():
         prediction_results = Prediction(pred_message, pred_img)
         logging.warning('built result')
         
-        #erase image from folder
-        os.remove(image_path)
         logging.warning('removed')
 
         return jsonify(prediction_results.__dict__)
