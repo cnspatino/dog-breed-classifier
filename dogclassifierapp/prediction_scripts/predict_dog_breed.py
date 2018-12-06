@@ -31,13 +31,13 @@ def predict_breed(img_path, checkpoint='static/resnet50_model.h5', names_pkl='st
 	K.clear_session()
 
 	# add root paths to file path inputs
-	checkpoint = os.path.join(app.root_path, checkpoint)
-	names_pkl = os.path.join(app.root_path, names_pkl)
+	checkpoint = join(app.root_path, checkpoint)
+	names_pkl = join(app.root_path, names_pkl)
 
 	# add root path to prediction image paths
-	breeds = os.path.join(app.root_path, 'static/breeds')
-	dog_return_img = os.path.join(app.root_path, 'static/img/dog.jpg')
-	other_return_img = os.path.join(app.root_path,'static/img/oops.png')
+	breeds = join(app.root_path, 'static/breeds')
+	dog_return_img = join(app.root_path, 'static/img/dog.jpg')
+	other_return_img = join(app.root_path,'static/img/oops.png')
 
 	# load model
 	model = load_model(checkpoint)

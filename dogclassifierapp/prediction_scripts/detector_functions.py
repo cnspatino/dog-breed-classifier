@@ -9,7 +9,7 @@ from os.path import join
 def face_detector(img_path):
 
 	# add root path to cascade file
-	cascade_path = os.path.join(app.root_path, 'static/haarcascade_frontalface_alt.xml')
+	cascade_path = join(app.root_path, 'static/haarcascade_frontalface_alt.xml')
 
 	### returns "True" if face is detected in image stored at img_path
 	face_cascade = cv2.CascadeClassifier(cascade_path)
