@@ -1,0 +1,1 @@
+from dogclassifier import app
