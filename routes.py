@@ -37,9 +37,9 @@ def predict():
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        pred_message = predict_breed(image_path)
+        pred_message, pred_img = predict_breed(image_path)
 
-        prediction_results = Prediction(pred_message, 'dummy')
+        prediction_results = Prediction(pred_message, pred_img)
         # TO DO: erase image
         return jsonify(prediction_results.__dict__)
 
