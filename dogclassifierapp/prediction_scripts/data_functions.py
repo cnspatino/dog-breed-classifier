@@ -2,6 +2,7 @@ from keras.applications.resnet50 import ResNet50, preprocess_input, decode_predi
 from keras.preprocessing import image                  
 from tqdm import tqdm
 import numpy as np
+import logging
 
 def path_to_tensor(img_path):
     # loads RGB image as PIL.Image.Image type
@@ -15,13 +16,16 @@ def extract_Resnet50(tensor):
 	return ResNet50(weights='imagenet', include_top=False, pooling='avg').predict(preprocess_input(tensor))
 
 def Resnet50_predict_breed(img_path, model, name_list):
+    logging.warning('in Resnet50_predict_breed.')
     # extract bottleneck features from pre-trained ResNet50 model (output is 2D)
     bottleneck_feature = extract_Resnet50(path_to_tensor(img_path))
+    logging.warning('in Resnet50_predict_breed: extracted')
     # add two more dimensions
     bottleneck_feature = np.expand_dims(bottleneck_feature, axis=0)
     bottleneck_feature = np.expand_dims(bottleneck_feature, axis=0)
-
+    logging.warning('in Resnet50_predict_breed: expanded')
     # obtain vector of prediction probabilities
     predicted_vector = model.predict(bottleneck_feature)
+    logging.warning('in Resnet50_predict_breed: predicted')
     # return dog breed that is predicted by the model
     return name_list[np.argmax(predicted_vector)].replace('_',' ')

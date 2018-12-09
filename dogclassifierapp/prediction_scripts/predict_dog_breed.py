@@ -9,6 +9,7 @@ from os import listdir
 from os.path import isfile, join
 from keras import backend as K
 from dogclassifierapp import app
+import logging
 
 
 def predict_breed(img_path, checkpoint='static/resnet50_model.h5', names_pkl='static/dog_names.pkl'):
@@ -27,6 +28,7 @@ def predict_breed(img_path, checkpoint='static/resnet50_model.h5', names_pkl='st
 
 	"""
 
+	logging.warning('in predict_breed')
 	# clear Keras session to reset before loading model
 	K.clear_session()
 
@@ -39,16 +41,19 @@ def predict_breed(img_path, checkpoint='static/resnet50_model.h5', names_pkl='st
 	dog_return_img = join(app.root_path, 'static/img/dog.jpg')
 	other_return_img = join(app.root_path,'static/img/oops.png')
 
+	logging.warning('predict_breed: load model')
 	# load model
 	model = load_model(checkpoint)
+	logging.warning('predict_breed: loaded model')
 
 	# load list of dog names from pickle file
 	with open(names_pkl, 'rb') as f:
 		dog_names = pickle.load(f)
 
+	logging.warning('predict_breed: calling resnet_50_predict_breed')
 	# return dog breed that is predicted by the model
 	prediction = Resnet50_predict_breed(img_path, model, dog_names)
-
+	logging.warning('predict_breed: returned prediction')
 	# get correct article to use in front of breed name
 	vowels = ['a','e','i','o','u']
 	if prediction.lower()[0] in vowels:
