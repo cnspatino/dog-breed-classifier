@@ -36,7 +36,7 @@ Through this project, I got a deeper knowledge of convolutional neural networks 
 
 ## File Descriptions <a name="files"></a>
 This repository includes all of the files that were necessary to code and deploy the web app.
-The index.html file can be found in the templates folder. This file includes the HTML and Bootstrap code for designing the web page. The complimentary JavaScript and CSS code can be found in the static folder. The saved Keras model (resnet50_model.h5), the cascade file for the face detector (haarcascade_frontalface_alt.xml) and the pickle file with the list of dog breed names (dog_names.pkl) can also be found in the static folder. Lastly, a corresponding image of each dog breed can be found in the static/breeds folder.
+The index.html file can be found in the templates folder. This file includes the HTML and Bootstrap code for designing the web page. The complimentary JavaScript and CSS code can be found in the static folder. The saved Keras model (resnet50_model.h5), pre-trained face detector file (haarcascade_frontalface_alt.xml) and a pickle file with the list of dog breed names (dog_names.pkl) can also be found in the static folder. Lastly, a corresponding image of each dog breed can be found in the static/breeds folder.
 
 The prediction_scripts folder contains all of the necessary scripts for getting the dog breed prediction from the uploaded file:
 
