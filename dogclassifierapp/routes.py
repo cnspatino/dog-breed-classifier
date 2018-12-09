@@ -1,9 +1,10 @@
-from flask import Flask, render_template, flash, request, redirect, url_for, send_from_directory, jsonify
+from flask import Flask, render_template, flash, request, redirect, url_for, send_from_directory, Response
 from werkzeug.utils import secure_filename
 import os
 from dogclassifierapp.prediction_scripts.predict_dog_breed import predict_breed
 from dogclassifierapp import app
 import logging
+import json
 
 logging.warning('in routes.py')
 
@@ -35,6 +36,21 @@ class Prediction:
 
 @app.route('/prediction', methods=['POST'])
 def predict():
+    def generate(image_path):
+        logging.warning('in generator')
+        # return immediate response to get another 55s window
+        yield " "
+        logging.warning('yielded 1 byte')
+
+        pred_message, pred_img = predict_breed(image_path)
+        logging.warning('predicted')
+
+        prediction_results = Prediction(pred_message, pred_img)
+        logging.warning('built result')
+        
+        logging.warning('removed')
+        yield json.dumps(prediction_results.__dict__)
+
     logging.warning('in predict')
     file = request.files['file']
     logging.warning('got file')
@@ -46,16 +62,8 @@ def predict():
         logging.warning('path joined')
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         logging.warning('image saved')
-
-        pred_message, pred_img = predict_breed(image_path)
-        logging.warning('predicted')
-
-        prediction_results = Prediction(pred_message, pred_img)
-        logging.warning('built result')
-        
-        logging.warning('removed')
-
-        return jsonify(prediction_results.__dict__)
+    
+    return Response(generate(image_path), mimetype='application/json')
 
 
 @app.route('/uploads/<filename>')
