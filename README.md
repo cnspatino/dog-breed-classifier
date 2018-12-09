@@ -11,13 +11,13 @@ Web app for predicting dog breed from an image using a CNN
 ## Installation <a name="installation"></a>
 This code runs using Python versions 3.*. Additional python packages needed for this code are included in the requirements.txt file.
 
-The packages can be installed by typing the following into your terminal (on a MacOS/Linux system) once you're in the directory of this repo folder:
+The packages can be installed by typing the following into your terminal (on a MacOS/Linux system) once you're in the directory of the repo:
 
 `pip install -r requirements.txt`
 
 To run the Flask app locally:
 
-Type the following into your terminal (MacOS):
+Change the directory to dogclassifierapp/ (within the repo) and then type the following into your terminal (MacOS):
 
 - export FLASK_APP=routes.py
 - flask run
