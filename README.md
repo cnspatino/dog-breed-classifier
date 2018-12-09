@@ -11,7 +11,7 @@ Web app for predicting dog breed from an image using a CNN
 ## Installation <a name="installation"></a>
 This code runs using Python versions 3.*. Additional python packages needed for this code are included in the requirements.txt file.
 
-The packages can be installed by typing the following into your terminal (on a MacOS/Linux system):
+The packages can be installed by typing the following into your terminal (on a MacOS/Linux system) once you're in the directory of this repo folder:
 
 `pip install -r requirements.txt`
 
