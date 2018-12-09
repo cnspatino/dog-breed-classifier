@@ -32,7 +32,10 @@ My motivation for this project was to develop an image classifier using convolut
 3. If a dog is detected, return the predicted breed
 
 I then implemented these scripts as a web app so that the user can easily run it locally in their browser and upload an image to get a prediction as opposed to having to run it from the command line. 
-Through this project, I got a deeper knowledge of convolutional neural networks as well as more practice in web app development, getting to experiment with JavaScript, CSS and Flask.
+
+For this project, I was also motivated to get a deeper knowledge of convolutional neural networks as well as more practice in web app development, getting to experiment with JavaScript, CSS and Flask.
+
+Note, the RunOnHeroku branch includes the modified code for deploying this app to Heroku. Unfortunately, I could not get around Heroku's timeout limit, but still left this as a branch to show the process for deploying it.
 
 ## File Descriptions <a name="files"></a>
 This repository includes all of the files that were necessary to code and deploy the web app.
