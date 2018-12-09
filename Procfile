@@ -1,1 +1,1 @@
-web gunicorn dogclassifierapp:app --timeout 300
+web gunicorn dogclassifierapp:app --timeout 300 --keep-alive 300
