@@ -6,7 +6,8 @@ Web app for predicting dog breed from an image using a CNN
 1. [Installation](#installation)
 2. [Project Motivation](#motivation)
 3. [File Descriptions](#files)
-4. [Licensing, Authors, and Acknowledgements](#licensing)
+4. [Summary of Model and Results](#results)
+5. [Licensing, Authors, and Acknowledgements](#licensing)
 
 ## Installation <a name="installation"></a>
 This code runs using Python versions 3.*. Additional python packages needed for this code are included in the requirements.txt file.
@@ -48,6 +49,31 @@ The prediction_scripts folder contains all of the necessary scripts for getting 
 - predict_dog_breed.py  is the main prediction script that utilizes the detector functions and helper functions
 
 The requirements.txt file includes all of the necessary libraries for this project.
+
+## Summary of Model and Results <a name="results"></a>
+For this project, I used transfer learning to create a convolutional neural network using bottleneck features from a Resnet50 model pre-trained on the ImageNet dataset. Bottleneck features are the last activation maps before the fully-connected layers, and using them allows us to make use of the knowledge already gained by the pre-trained model. Transfer learning allows us to reduce training time without sacrificing accuracy by only having to train on the newly added layers.
+
+The model architecture was designed as follows:
+
+-	Input layer: The output of the ResNet50 model (aka the bottleneck features)
+-	Global Average Pooling layer
+-	Fully connected layer with a softmax activation function
+
+The model was trained on 6680 dog images using 20 epochs to find the best weights. I then used the trained model to predict the results of 836 test dog images. The result was a test accuracy of 81%.
+
+**Detector Results**:
+
+With a test set of 100 human face images and 100 dog images, the following results were determined:
+
+- Human face detector: A human face was detected in 100% of the human images and 11% of the dog images.
+- Dog detector: A dog was detected in 0% of the human images and 100% of the dog images.
+
+**Potential points of improvement**:
+
+1. An ensemble approach could be employed in order to further improve prediction accuracy.
+2. Other animal detector algorithms could be applied in order to detect and reject images of other animals.
+3. Training the model on human and dog images in which the subject is not looking straight at the camera could help with the accuracy of the model and detector functions.
+
 
 ## Licensing, Authors, and Acknowledgements <a name="licensing"></a>
 I'd like to thank the Udacity Data Science Nanodegree team for the inspiration for this project and for template code for the CNN image classifier. I’d also like to thank suketran for providing code on Bootsnipp for uploading an image and displaying a preview of the uploaded image on a webapp ([code found here](https://bootsnipp.com/snippets/eNbOa)).
